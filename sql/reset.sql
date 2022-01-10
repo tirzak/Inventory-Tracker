@@ -1,0 +1,3 @@
+DROP FUNCTION shopifyinventorydatabase.trigger_set_timestamp;
+DROP DATABASE shopifyinventorydatabase;
+DROP USER shopifyinventoryuser;

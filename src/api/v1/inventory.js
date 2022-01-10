@@ -7,7 +7,7 @@ const router = express.Router()
 export const Inventory =  () =>{
 
   router.get('/', async (req,res)=>{
-    const id = req.params.id
+  
     try{ 
         const {results}=await db.query(`
         SELECT * FROM inventorylist;
@@ -29,9 +29,7 @@ export const Inventory =  () =>{
     try{ 
         const {results}=await db.query(`
         INSERT INTO inventorylist (sku, productname, itemcount) 
-        VALUES ($1, $2, $3)
-        ON CONFLICT (productname) DO UPDATE 
-          SET itemcount=excluded.itemcount+inventorylist.itemcount RETURNING *;
+        VALUES ($1, $2, $3);
 
         `,[uuid,productname,itemcount]);
 
@@ -40,7 +38,7 @@ export const Inventory =  () =>{
         sku: uuid,
         productName: productname,
         itemcount: returnedRow.itemcount,
-        createdAt: returnedRow.created_at,
+        created_at: returnedRow.created_at,
         updated_at: returnedRow.updated_at
 
 
@@ -72,7 +70,7 @@ export const Inventory =  () =>{
         sku: sku,
         productName: returnedRow.productname,
         itemcount: returnedRow.itemcount,
-        createdAt: returnedRow.created_at,
+        created_at: returnedRow.created_at,
         updated_at: returnedRow.updated_at
 
 

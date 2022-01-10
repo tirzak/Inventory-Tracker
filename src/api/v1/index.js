@@ -1,7 +1,9 @@
 
+import express from 'express';
+
 import { Inventory} from './inventory'
 import { Group} from './group'
-import express from 'express';
+import { Collections } from './collections';
 const router = express.Router()
 
 
@@ -18,6 +20,8 @@ router.get('/',(req, res)=>{
  */
 router.use('/inventory',Inventory());
 router.use('/group', Group())
+router.use('/collections', Collections())
+
 
 return router;
 

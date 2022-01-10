@@ -48,12 +48,11 @@ EXECUTE PROCEDURE trigger_set_timestamp();
 
 
 CREATE TABLE collections (
-collection_id INT GENERATED ALWAYS AS IDENTITY,
 group_id INT,
 item_id INT,
 created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
- PRIMARY KEY(collection_id),
+ CONSTRAINT pk_collection PRIMARY KEY (group_id,item_id),
  CONSTRAINT fk_group
       FOREIGN KEY(group_id) 
 	    REFERENCES grouplist(group_id)

@@ -1,6 +1,6 @@
 
 import { Inventory} from './inventory'
-//import { AdminRoute} from './admin'
+import { Group} from './group'
 import express from 'express';
 const router = express.Router()
 
@@ -17,7 +17,7 @@ router.get('/',(req, res)=>{
  * 
  */
 router.use('/inventory',Inventory());
-//router.use('/schedules', SchedulesRoute())
+router.use('/group', Group())
 
 return router;
 

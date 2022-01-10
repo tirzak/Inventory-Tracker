@@ -10,7 +10,8 @@ export const Inventory =  () =>{
   
     try{ 
         const {results}=await db.query(`
-        SELECT * FROM inventorylist;
+        SELECT sku, productname as "productName", itemcount as "itemCount", description, created_at as "createdAt", 
+        updated_at as "updatedAt"  FROM inventorylist;
         
       
    `);
@@ -23,23 +24,42 @@ export const Inventory =  () =>{
 
   });
 
+  router.get('/:sku', async (req,res)=>{
+    const {sku} = req.params
+    try{ 
+        const {results}=await db.query(`
+        SELECT sku, productname as "productName", itemcount as "itemCount", description, created_at as "createdAt", 
+        updated_at as "updatedAt"  FROM inventorylist WHERE sku=$1;
+        
+      
+   `,[sku]);
+
+        res.status(200).json(results.rows[0])
+    }
+    catch (error){
+       res.status(500).json({error: `${error}`})
+
+    }
+
+  });
+
   router.post('/', async (req,res)=>{
-    const {productname,itemcount} = req.body
+    const {productName,itemCount,description} = req.body
     const uuid = uuidv4()
     try{ 
         const {results}=await db.query(`
-        INSERT INTO inventorylist (sku, productname, itemcount) 
-        VALUES ($1, $2, $3);
-
-        `,[uuid,productname,itemcount]);
+        INSERT INTO inventorylist (sku, productname, itemcount, description) 
+        VALUES ($1, $2, $3, $4)
+        RETURNING *;
+        `,[uuid,productName,itemCount,description]);
 
       const returnedRow = results.rows[0]
       let resp = {
         sku: uuid,
-        productName: productname,
-        itemcount: returnedRow.itemcount,
-        created_at: returnedRow.created_at,
-        updated_at: returnedRow.updated_at
+        productName: returnedRow.productname,
+        itemCount: returnedRow.itemcount,
+        createdAt: returnedRow.created_at,
+        updatedAt: returnedRow.updated_at
 
 
 
@@ -55,23 +75,24 @@ export const Inventory =  () =>{
   
   router.post('/:sku', async (req,res)=>{
     const {sku} = req.params
-    const {productname,itemcount} = req.body
+    const {productname,itemcount,description} = req.body
 
     
     try{ 
       const {results}=await db.query(`
           UPDATE inventorylist
-          SET productname=$1, itemcount=$2 WHERE sku=$3 RETURNING *;
+          SET productname=$1, itemcount=$2, description=$3 WHERE sku=$4 RETURNING *;
 
-        `,[productname,itemcount,sku]);
+        `,[productname,itemcount,description,sku]);
 
       const returnedRow = results.rows[0]
       let resp = {
         sku: sku,
         productName: returnedRow.productname,
-        itemcount: returnedRow.itemcount,
-        created_at: returnedRow.created_at,
-        updated_at: returnedRow.updated_at
+        itemCount: returnedRow.itemcount,
+        description: returnedRow.description,
+        createdAt: returnedRow.created_at,
+        updatedAt: returnedRow.updated_at
 
 
 

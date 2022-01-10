@@ -4,7 +4,7 @@ CREATE USER shopifyinventoryuser WITH PASSWORD 'password';
 GRANT ALL PRIVILEGES ON DATABASE shopifyinventorydatabase TO shopifyinventoryuser;
 
 \c shopifyinventorydatabase;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO shopifyinventoryuser;
+
 CREATE OR REPLACE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -16,7 +16,7 @@ $$ LANGUAGE plpgsql;
 CREATE TABLE inventorylist (
 item_id INT GENERATED ALWAYS AS IDENTITY,
 sku VARCHAR(36) NOT NULL UNIQUE,
-productName VARCHAR(45) NOT NULL,
+productname VARCHAR(45) NOT NULL,
 itemcount NUMERIC NOT NULL,
 description VARCHAR(56) NOT NULL,
 created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -35,7 +35,7 @@ CREATE TABLE grouplist (
 group_id INT GENERATED ALWAYS AS IDENTITY,
 uuid VARCHAR(36) NOT NULL UNIQUE,
 groupname VARCHAR(45) NOT NULL,
-productcount INT NOT NULL,
+productcount INT NOT NULL DEFAULT 0,
 created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 PRIMARY KEY(group_id)
@@ -69,3 +69,5 @@ CREATE TRIGGER set_collectionstimestamp
 BEFORE UPDATE ON collections
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO shopifyinventoryuser;

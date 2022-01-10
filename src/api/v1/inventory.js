@@ -11,7 +11,7 @@ export const Inventory =  () =>{
     try{ 
         const {results}=await db.query(`
         SELECT sku, productname as "productName", itemcount as "itemCount", description, created_at as "createdAt", 
-        updated_at as "updatedAt"  FROM inventorylist;
+        updated_at as "updatedAt"  FROM inventorylist ORDER BY updated_at DESC;
         
       
    `);
@@ -75,15 +75,17 @@ export const Inventory =  () =>{
   
   router.post('/:sku', async (req,res)=>{
     const {sku} = req.params
-    const {productname,itemcount,description} = req.body
-
     
+
+   
     try{ 
+      const {productName,itemCount,description} = req.body
+      console.log(req.body)
       const {results}=await db.query(`
           UPDATE inventorylist
           SET productname=$1, itemcount=$2, description=$3 WHERE sku=$4 RETURNING *;
 
-        `,[productname,itemcount,description,sku]);
+        `,[productName,itemCount,description,sku]);
 
       const returnedRow = results.rows[0]
       let resp = {
@@ -100,6 +102,7 @@ export const Inventory =  () =>{
       res.status(200).json(resp)
     }
     catch (error){
+      console.log(error)
       res.status(500).json({error: `${error}`})
 
     }

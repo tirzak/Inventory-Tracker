@@ -10,7 +10,16 @@ export const Collections =  () =>{
   
     try{ 
         const {results}=await db.query(`
-        SELECT *  FROM collections;
+        SELECT
+        i.sku ,
+        i.description 
+        ,i.productname as "productName",
+        g.groupname as "groupName"
+        FROM collections c
+        INNER JOIN grouplist g
+            ON g.group_id = c.group_id
+        INNER JOIN inventorylist i
+            ON i.item_id = c.item_id;
       
    `);
         res.status(200).json(results.rows)
@@ -24,13 +33,25 @@ export const Collections =  () =>{
   router.get('/:uuid', async (req,res)=>{
 
     const {uuid}=req.params
+   
     
     try{ 
-        const {results}=await db.query(`
+        let groupDetails = await db.query(`SELECT productcount as "productCount",
+        groupname as "groupName"
+        FROM grouplist WHERE uuid=$1`,[uuid])
+        groupDetails=groupDetails.results.rows[0]
+     
+        
+        if(groupDetails.productCount>0){
+          
+          const {results}=await db.query(`
           SELECT
           i.sku ,
           i.description 
-          ,i.productname as "productName"
+          ,i.productname as "productName",
+          i.itemCount as "itemCount",
+          g.groupname as "groupName",
+          g.uuid
           FROM collections c
           INNER JOIN grouplist g
               ON g.group_id = c.group_id
@@ -38,10 +59,22 @@ export const Collections =  () =>{
               ON i.item_id = c.item_id
           WHERE g.uuid=$1;
       
-   `,[uuid]);
-        res.status(200).json(results.rows)
+          `,[uuid]);
+          res.status(200).json(results.rows)
+        }
+
+       
+        else {
+       
+          res.status(200).json([{groupName: `${groupDetails.groupName}`,message : "Empty"}])
+
+        }
+      
+          
     }
     catch (error){
+     
+
        res.status(500).json({error: `${error}`})
 
     } 
@@ -69,8 +102,8 @@ export const Collections =  () =>{
         [groupId, inventoryItems,
         ]);
          db.query(`
-         UPDATE grouplist SET productCount = $2 WHERE group_id = $1;
-         `,[groupId,productCount])
+         UPDATE grouplist SET productCount = productCount +1 WHERE group_id = $1;
+         `,[groupId])
         
 
       
@@ -94,13 +127,16 @@ export const Collections =  () =>{
     
     try{ 
       const {uuid,sku} = req.body
-      const {results}=await db.query(`
+       db.query(`
           DELETE FROM collections WHERE group_id=(SELECT group_id from grouplist WHERE uuid=$1) AND 
           item_id=(SELECT item_id FROM inventorylist WHERE sku=$2)
           ;
 
         `,[uuid,sku]);
-
+        db.query(`
+          UPDATE grouplist SET productCount = productCount-1 WHERE uuid=$1;
+        `,[uuid])
+       
       
       let resp = {
         uuid,

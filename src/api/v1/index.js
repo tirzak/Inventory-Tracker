@@ -1,9 +1,9 @@
 
 import express from 'express';
 
-import { Inventory} from './inventory'
-import { Group} from './group'
-import { Collections } from './collections';
+import { InventoryRoute } from './inventoryRoute'
+import { GroupRoute } from './groupRoute'
+import { CollectionsRoute } from './collectionRoute';
 const router = express.Router()
 
 
@@ -18,9 +18,9 @@ router.get('/',(req, res)=>{
  * The code below keeps the code clean by using different files for different routes
  * 
  */
-router.use('/inventory',Inventory());
-router.use('/group', Group())
-router.use('/collections', Collections())
+router.use('/inventory',InventoryRoute());
+router.use('/group', GroupRoute())
+router.use('/collections', CollectionsRoute())
 
 
 return router;

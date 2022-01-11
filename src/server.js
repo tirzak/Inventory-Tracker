@@ -4,9 +4,11 @@ import dotenv from 'dotenv';
 import path from 'path'
 import { db } from './database';
 import bodyParser from 'body-parser'
+
+
 dotenv.config();
 
-let port = process.argv[2]
+const port = process.env.NODE_PORT || 8000
 const app = express ();
 
 

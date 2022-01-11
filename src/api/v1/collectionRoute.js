@@ -1,21 +1,17 @@
 import express from 'express';
-import { db } from '../../database';
-import { v4 as uuidv4 } from 'uuid';
 import  * as CollectionsController from "../../controllers/collectionController";
+import { UUIDValidator } from '../../middlewares/uuidValidator';
 const router = express.Router()
 
 
 export const CollectionsRoute =  () =>{
 
-  router.get('/', CollectionsController.getCollectionsController);
-  router.get('/:uuid', CollectionsController.getSingleCollectionController);
+  router.route('/').get( CollectionsController.getCollectionsController);
+  router.route('/:uuid').get( UUIDValidator, CollectionsController.getSingleCollectionController);
 
-  router.post('/',CollectionsController.postCollectionsController);
-  
+  router.route('/').post(CollectionsController.postCollectionsController);
 
-
-
-  router.delete('/', CollectionsController.deleteCollectionController);
+  router.route('/').delete(CollectionsController.deleteCollectionController);
 
 
   return router;

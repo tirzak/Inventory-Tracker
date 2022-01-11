@@ -4,17 +4,18 @@ import { v4 as uuidv4 } from 'uuid';
 import * as GroupController from "../../controllers/groupController";
 const router = express.Router()
 
-
+import { UUIDValidator } from '../../middlewares/uuidValidator';
+import { GroupValidator } from '../../middlewares/groupValidator';
 export const GroupRoute =  () =>{
 
   router.get('/', GroupController.getGroupsController);
-  router.get('/:uuid', GroupController.getSingleGroupController);
+  router.route('/:uuid').get(UUIDValidator, GroupController.getSingleGroupController);
 
-  router.post('/', GroupController.postGroupsController);
+  router.route('/').post(GroupValidator, GroupController.postGroupsController);
   
-  router.post('/:uuid', GroupController.updateGroupController);
+  router.route('/:uuid').post(UUIDValidator,GroupValidator, GroupController.updateGroupController);
 
-  router.delete('/:uuid', GroupController.deleteGroupController);
+  router.route('/:uuid').delete(UUIDValidator, GroupController.deleteGroupController);
 
 
   return router;

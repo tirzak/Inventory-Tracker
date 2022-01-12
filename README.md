@@ -17,7 +17,7 @@
 1. Clone the project and run `npm install` in a terminal to install dependencies inside the project directory
 2. Install PostgreSQL. You can find how to install it on this link https://www.postgresql.org/download/
 3. The PostgreSQL server should run on port 5432. If that port is unavailable, please change the `DB_PORT` in `.env` file
-4. Run the `pgsql.sql` file using the command `psql -p 5432  -U yourAdminUser -d postgres -a -f  sql/createTables.sql` or copy and paste the contents of the file in a psql cli. It will create the database,tables and the required user 
+4. Run the `createTables.sql` file using the command `psql -p 5432  -U yourAdminUser -d postgres -a -f  sql/createTables.sql` or copy and paste the contents of the file in a psql cli. It will create the database,tables and the required user 
     * You need to replace the yourAdminUser in the command with an user in your SQL server that has the capability to create databases. The command `ALTER ROLE me CREATEDB;` can gran a role create database privileges
     * The database specified with -d flag is one of the default databases. If it does not exist in your system, please change it to something that is in your SQL server 
     * Change the port if the server is running on a different port. It is specified with -p flag

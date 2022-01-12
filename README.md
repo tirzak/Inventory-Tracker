@@ -28,7 +28,7 @@
     * Change the port if the SQL server is running on a different port. It is specified with -p flag in the command
 5. Running `randomData.sql` with command `psql -p 5432  -U yourAdminUser -d shopifyinventorydatabase -a -f  sql/randomData.sql` will fill the tables with data. This step can be skipped
 
-6. `npm start` should start the app. The default port is 8000. It can be configured in the `.env` file by changing `NODE_PORT`
+6. `npm start` should start the app. The default port is 3000. It can be configured in the `.env` file by changing `NODE_PORT`
 
 7. Go to http://localhost:3000 to access the app.
 

@@ -6,7 +6,7 @@ import { db } from '../database';
 import { v4 as uuidv4 } from 'uuid';
 export const getGroup= async()=>{
 
-    const {results}=await db.query(`
+    const results=await db.query(`
     SELECT uuid, groupname as "groupName", productcount as "productCount", created_at as "createdAt", 
     updated_at as "updatedAt"  FROM grouplist ORDER BY updated_at DESC;
     
@@ -20,7 +20,7 @@ export const getGroup= async()=>{
 export const getSingleGroup= async(uuid)=>{
 
     
-    const {results}=await db.query(`
+    const results=await db.query(`
         SELECT uuid, groupname as "groupName", productcount as "productCount", created_at as "createdAt", 
         updated_at as "updatedAt"  FROM grouplist WHERE uuid=$1  ;
       
@@ -36,7 +36,7 @@ export const getSingleGroup= async(uuid)=>{
 export const postGroup= async(groupName)=>{
 
     const uuid = uuidv4()
-    const {results}=await db.query(`
+    const results=await db.query(`
         INSERT INTO grouplist (uuid, groupname) 
         VALUES ($1, $2)
         RETURNING *;
@@ -46,7 +46,7 @@ export const postGroup= async(groupName)=>{
       let resp = {
         uuid: uuid,
         groupName: returnedRow.groupname,
-        productCount: returnedRow.productCount,
+        productCount: returnedRow.productcount,
         created_at: returnedRow.created_at,
         updated_at: returnedRow.updated_at
 
@@ -63,7 +63,7 @@ export const postGroup= async(groupName)=>{
 }
 
 export const updateGroup = async (groupName, uuid)=>{
-    const {results}=await db.query(`
+    const results=await db.query(`
     UPDATE grouplist
     SET groupname=$1 WHERE uuid=$2 RETURNING *;
 
@@ -72,8 +72,8 @@ export const updateGroup = async (groupName, uuid)=>{
 const returnedRow = results.rows[0]
 let resp = {
   uuid: uuid,
-  groupName: returnedRow.productname,
-  productCount: returnedRow.itemcount,
+  groupName: returnedRow.groupname,
+  productCount: returnedRow.productcount,
   createdAt: returnedRow.created_at,
   updatedAt: returnedRow.updated_at
 

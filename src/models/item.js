@@ -3,12 +3,13 @@ import { v4 as uuidv4 } from 'uuid';
 export const getItem= async()=>{
 
     
-        const {results}=await db.query(`
+        const results=await db.query(`
         SELECT sku, productname as "productName", itemcount as "itemCount", description, created_at as "createdAt", 
         updated_at as "updatedAt"  FROM inventorylist ORDER BY updated_at DESC;
         
       
    `);
+   
         return results.rows
     
   
@@ -18,12 +19,13 @@ export const getItem= async()=>{
 export const getSingleItem= async(sku)=>{
 
     
-    const {results}=await db.query(`
+    const results=await db.query(`
     SELECT sku, productname as "productName", itemcount as "itemCount", description, created_at as "createdAt", 
     updated_at as "updatedAt"  FROM inventorylist WHERE sku=$1;
     
     
     `,[sku]);
+    
     return results.rows[0]
 
 
@@ -35,7 +37,7 @@ export const getSingleItem= async(sku)=>{
 export const postItem= async(productName, itemCount, description)=>{
 
     const uuid = uuidv4()
-    const {results}=await db.query(`
+    const results=await db.query(`
     INSERT INTO inventorylist (sku, productname, itemcount, description) 
     VALUES ($1, $2, $3, $4)
     RETURNING *;
@@ -46,6 +48,7 @@ export const postItem= async(productName, itemCount, description)=>{
     sku: uuid,
     productName: returnedRow.productname,
     itemCount: returnedRow.itemcount,
+    description: returnedRow.description,
     createdAt: returnedRow.created_at,
     updatedAt: returnedRow.updated_at
 
@@ -59,7 +62,7 @@ export const postItem= async(productName, itemCount, description)=>{
 }
 
 export const updateItem = async (productName, itemCount, description,sku)=>{
-    const {results}=await db.query(`
+    const results=await db.query(`
           UPDATE inventorylist
           SET productname=$1, itemcount=$2, description=$3 WHERE sku=$4 RETURNING *;
 

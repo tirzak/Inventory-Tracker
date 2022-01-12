@@ -29,16 +29,14 @@ export const getSingleGroupController = async (req,res) =>{
 
 
 export const postGroupsController = async (req,res) =>{
-   
-    // const a = validationResult(req).array()
-    // console.log(a)
+
     const {groupName} = req.body
     try{ 
 
 
         const resp = await Group.postGroup(groupName)
       
-      res.status(200).json(resp)
+      res.status(201).json(resp)
     }
     catch (error){
        res.status(500).json({error: `${error}`})
@@ -52,7 +50,7 @@ export const updateGroupController = async (req,res) =>{
         const {uuid} = req.params
         const {groupName} = req.body
       const resp = await Group.updateGroup(groupName,uuid)
-      
+     
       res.status(200).json(resp)
     }
     catch (error){

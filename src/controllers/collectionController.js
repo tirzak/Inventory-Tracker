@@ -21,7 +21,7 @@ export const getSingleCollectionController = async (req,res) =>{
         res.status(200).json(resp)
     }
     catch (error){
-        console.log(error)
+        
        res.status(500).json({error: `${error}`})
 
     }
@@ -31,8 +31,7 @@ export const getSingleCollectionController = async (req,res) =>{
 
 export const postCollectionsController = async (req,res) =>{
    
-    // const a = validationResult(req).array()
-    // console.log(a)
+    
     
     try{ 
 
@@ -40,7 +39,7 @@ export const postCollectionsController = async (req,res) =>{
         const {inventoryItems} = req.body
         const resp = await Collection.postCollection(uuid, inventoryItems)
       
-      res.status(200).json(resp)
+      res.status(201).json(resp)
     }
     catch (error){
        res.status(500).json({error: `${error}`})
@@ -53,7 +52,6 @@ export const deleteCollectionController = async (req,res) =>{
     try{ 
         const {uuid,sku} = req.body
       const resp = await Collection.deleteCollection(uuid,sku)
-
       res.status(200).json(resp)
     }
     catch (error){

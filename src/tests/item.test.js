@@ -75,7 +75,7 @@ describe("Test the paths for inventory Routes", () => {
   afterAll(async ()=>{
 
     await Item.deleteItem(uuid)
-    await db.end()
+    
 
   })
 
@@ -138,7 +138,11 @@ describe("Test the paths with incorrect or empty values for group Routes", () =>
     
   });
 
+  afterAll(async ()=>{
+    await db.end()
+  
 
+  })
 
 });
 

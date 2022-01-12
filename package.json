@@ -4,7 +4,7 @@
   "description": "",
   "main": "extract.js",
   "scripts": {
-    "test": "jest  --runInBand --detectOpenHandles",
+    "test": "jest",
     "start": "npx babel-node src/server.js",
     "dev": "npx nodemon --exec npx babel-node src/server.js 8000"
   },

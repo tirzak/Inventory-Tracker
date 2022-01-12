@@ -2,6 +2,7 @@ import request from 'supertest'
 import {app} from '../app'
 import * as Group from '../models/group'
 import { v4 as uuidv4 } from 'uuid';
+import {db} from '../database'
 
 describe("Test the paths with correct values for group Routes", () => {
 
@@ -66,7 +67,7 @@ describe("Test the paths with correct values for group Routes", () => {
   
     afterAll(async ()=>{
       await Group.deleteGroup(uuid)
-     
+    
   
     })
   
@@ -105,7 +106,13 @@ describe("Test the paths with incorrect or empty values for group Routes", () =>
       expect(response.body).toBe("");
       
     });
+
+    afterAll(async ()=>{
+      await db.end()
+    
   
+    })
+   
   
   
   });

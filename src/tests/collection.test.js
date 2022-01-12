@@ -2,7 +2,7 @@ import request from 'supertest'
 import {app} from '../app'
 import * as Item from '../models/item'
 import * as Group from '../models/group'
-
+import {db} from '../database'
 describe("Test the paths for collection Routes", () => {
 
     let groupName = 'testgrouprobocop'
@@ -69,6 +69,7 @@ describe("Test the paths for collection Routes", () => {
     afterAll(async ()=>{
       await Group.deleteGroup(uuid)
      await Item.deleteItem(sku)
+     await db.end()
   
     })
   

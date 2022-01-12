@@ -19,7 +19,8 @@ app.use(
 
 app.use('/api/v1', apiV1()) 
 
+app.use(express.static(path.join(__dirname, '../build')));
 
-app.use((_, res) => res.redirect("/api/v1"));
+
 //Redirects unknown routes to index
 

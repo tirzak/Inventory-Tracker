@@ -26,7 +26,7 @@
     * You need to replace the yourAdminUser in the command with an user in your SQL server that has the capability to create databases. The command `ALTER ROLE rolename CREATEDB;` can grant a role create database privileges
     * The database specified with -d flag is one of the default databases. If it does not exist in your system, please change it to something that is in your SQL server 
     * Change the port if the SQL server is running on a different port. It is specified with -p flag in the command
-5. Running `randomData.sql` will fill the tables with data. This step can be skipped
+5. Running `randomData.sql` with command `psql -p 5432  -U yourAdminUser -d shopifyinventorydatabase -a -f  sql/randomData.sql` will fill the tables with data. This step can be skipped
 
 6. `npm start` should start the app. The default port is 8000. It can be configured in the `.env` file by changing `NODE_PORT`
 

@@ -1,5 +1,10 @@
 import { db } from '../database';
 import { v4 as uuidv4 } from 'uuid';
+
+/**
+ * 
+ * @returns {Array<Object>}
+ */
 export const getItem = async () => {
 
     const results = await db.query(`
@@ -14,7 +19,11 @@ export const getItem = async () => {
 
 
 }
-
+/**
+ * 
+ * @param {String} sku 
+ * @returns {{sku: String, productName: String, itemCount: Number, createdAt: String, updatedAt: String}}
+ */
 export const getSingleItem = async (sku) => {
 
 
@@ -35,7 +44,13 @@ export const getSingleItem = async (sku) => {
 
 }
 
-
+/**
+ * 
+ * @param {String} productName 
+ * @param {Number} itemCount 
+ * @param {String} description 
+ * @returns {{sku: String, productName: String, itemCount: Number, createdAt: String, updatedAt: String}}
+ */
 
 export const postItem = async (productName, itemCount, description) => {
 
@@ -63,7 +78,14 @@ export const postItem = async (productName, itemCount, description) => {
 
 
 }
-
+/**
+ * 
+ * @param {String} productName 
+ * @param {Number} itemCount 
+ * @param {String} description 
+ * @param {String} sku 
+ * @returns {{sku: String, productName: String, itemCount: Number, createdAt: String, updatedAt: String}}
+ */
 export const updateItem = async (productName, itemCount, description, sku) => {
     const results = await db.query(`
           UPDATE inventorylist
@@ -85,9 +107,13 @@ export const updateItem = async (productName, itemCount, description, sku) => {
     }
     return resp
 }
-
+/**
+ * 
+ * @param {String} sku 
+ * @returns {{sku: String}}
+ */
 export const deleteItem = async (sku) => {
-    db.query(`
+    await db.query(`
         DELETE FROM inventorylist WHERE sku=$1;
     
         `, [sku]);

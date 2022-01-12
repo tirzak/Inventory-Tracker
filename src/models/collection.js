@@ -4,6 +4,11 @@
 
 import { db } from '../database';
 import { updateProductCount, getSingleGroup } from './group';
+
+/**
+ * 
+ * @returns {Array<Object>}
+ */
 export const getCollection = async () => {
 
     const results = await db.query(`
@@ -24,7 +29,11 @@ export const getCollection = async () => {
 
 
 }
-
+/**
+ * 
+ * @param {String} uuid 
+ * @returns {Array<Object>}
+ */
 export const getSingleCollection = async (uuid) => {
 
     let getGroupDetails = await getSingleGroup(uuid)
@@ -57,6 +66,12 @@ export const getSingleCollection = async (uuid) => {
 
 }
 
+/**
+ * 
+ * @param {String} uuid 
+ * @param {Array} inventoryItems 
+ * @returns {JSON} 
+ */
 
 
 export const postCollection = async (uuid, inventoryItems) => {
@@ -87,7 +102,7 @@ export const postCollection = async (uuid, inventoryItems) => {
 
 
 export const deleteCollection = async (uuid, sku) => {
-    db.query(`
+    await db.query(`
     DELETE FROM collections WHERE group_id=(SELECT group_id from grouplist WHERE uuid=$1) AND 
     item_id=(SELECT item_id FROM inventorylist WHERE sku=$2)
     ;

@@ -1,6 +1,7 @@
 
-
+//Controller for item routes
 import * as Item from "../models/item";
+//Get all items
 export const getItemsController = async (req, res) => {
 
     try {
@@ -13,7 +14,7 @@ export const getItemsController = async (req, res) => {
 
     }
 }
-
+//Get a single item
 export const getSingleItemController = async (req, res) => {
     const { sku } = req.params
     try {
@@ -28,7 +29,7 @@ export const getSingleItemController = async (req, res) => {
 }
 
 
-
+//Create an item
 export const postItemsController = async (req, res) => {
 
 
@@ -45,7 +46,7 @@ export const postItemsController = async (req, res) => {
 
     }
 }
-
+//Update an item
 export const updateItemController = async (req, res) => {
 
 
@@ -67,7 +68,7 @@ export const updateItemController = async (req, res) => {
     }
 }
 
-
+//Delete an item
 export const deleteItemController = async (req, res) => {
 
 

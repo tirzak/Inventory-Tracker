@@ -1,6 +1,8 @@
 
-
+//Controller for group routes
 import * as Group from "../models/group";
+
+//Get all groups
 export const getGroupsController = async (req, res) => {
     try {
         const results = await Group.getGroup()
@@ -12,7 +14,7 @@ export const getGroupsController = async (req, res) => {
 
     }
 }
-
+//Get a single group
 export const getSingleGroupController = async (req, res) => {
     const { uuid } = req.params
     try {
@@ -27,7 +29,7 @@ export const getSingleGroupController = async (req, res) => {
 }
 
 
-
+//Create a group
 export const postGroupsController = async (req, res) => {
 
     const { groupName } = req.body
@@ -43,7 +45,7 @@ export const postGroupsController = async (req, res) => {
 
     }
 }
-
+//Update a group's name
 export const updateGroupController = async (req, res) => {
 
     try {
@@ -60,7 +62,7 @@ export const updateGroupController = async (req, res) => {
     }
 }
 
-
+//Delete a group
 export const deleteGroupController = async (req, res) => {
 
 

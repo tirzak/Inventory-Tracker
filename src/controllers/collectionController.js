@@ -1,6 +1,8 @@
 
-
+//Controller for collection routes
 import * as Collection from "../models/collection";
+
+//Get all collections
 export const getCollectionsController = async (req, res) => {
     try {
         const results = await Collection.getCollection()
@@ -13,6 +15,7 @@ export const getCollectionsController = async (req, res) => {
     }
 }
 
+//Get a collections
 export const getSingleCollectionController = async (req, res) => {
     const { uuid } = req.params
     try {
@@ -28,7 +31,7 @@ export const getSingleCollectionController = async (req, res) => {
 }
 
 
-
+//Create a collection
 export const postCollectionsController = async (req, res) => {
 
 
@@ -46,7 +49,7 @@ export const postCollectionsController = async (req, res) => {
 
     }
 }
-
+//Delete a relation in the collection table i.e remove an item from group
 export const deleteCollectionController = async (req, res) => {
 
     try {

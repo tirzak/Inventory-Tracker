@@ -4,6 +4,10 @@
 
 import { db } from '../database';
 import { v4 as uuidv4 } from 'uuid';
+/**
+ * 
+ * @returns {Array<Object>}
+ */
 export const getGroup = async () => {
 
     const results = await db.query(`
@@ -21,7 +25,11 @@ export const getGroup = async () => {
 
 
 }
-
+/**
+ * 
+ * @param {String} uuid 
+ * @returns {{uuid: String, groupName: String, productCount: Number, createdAt: String, updatedAt: String  }}
+ */
 export const getSingleGroup = async (uuid) => {
 
 
@@ -40,7 +48,11 @@ else {
 
 }
 
-
+/**
+ * 
+ * @param {String} groupname 
+ * @returns {{uuid: String, groupName: String, productCount: Number, createdAt: String, updatedAt: String  }}
+ */
 
 export const postGroup = async (groupName) => {
 
@@ -71,6 +83,14 @@ export const postGroup = async (groupName) => {
 
 }
 
+/**
+ * 
+ * @param {String} groupName 
+ * @param {String} uuid 
+ * @returns {{uuid: String, groupName: String, productCount: Number, createdAt: String, updatedAt: String  }}
+ */
+ 
+
 export const updateGroup = async (groupName, uuid) => {
     const results = await db.query(`
     UPDATE grouplist
@@ -92,6 +112,12 @@ export const updateGroup = async (groupName, uuid) => {
     return resp
 }
 
+/**
+ * 
+ * @param {String} uuid 
+ * @param {Number} count 
+ * @returns {String}
+ */
 export const updateProductCount = async (uuid, count) => {
 
     await db.query(`
@@ -100,9 +126,15 @@ export const updateProductCount = async (uuid, count) => {
 
     return uuid
 }
+/**
+ * 
+ * @param {String} uuid 
+ * @returns {{uuid: String}}
+ */
+
 
 export const deleteGroup = async (uuid) => {
-    db.query(`
+    await db.query(`
           DELETE FROM grouplist WHERE uuid=$1;
 
         `, [uuid]);

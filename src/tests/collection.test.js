@@ -40,12 +40,6 @@ describe("Test the paths for collection Routes", () => {
         expect(response.body[0].productName).toBe(productName)
         expect(response.body[0].groupName).toBe(groupName)
 
-
-
-
-        
-        
-    
       });
 
     test("It should get an array of item and group relations(collections)", async () => {

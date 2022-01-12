@@ -2,7 +2,7 @@ import request from 'supertest'
 import {app} from '../app'
 import * as Item from '../models/item'
 import { v4 as uuidv4 } from 'uuid';
-
+import {db} from '../database'
 
 
 
@@ -20,7 +20,7 @@ describe("Test the paths for inventory Routes", () => {
     
     const response = await request(app).get('/api/v1/inventory');
     expect(response.statusCode).toBe(200);
-    expect(response.body[0].productName).toBe(productName)
+    
   });
 
 
@@ -73,8 +73,9 @@ describe("Test the paths for inventory Routes", () => {
   });
 
   afterAll(async ()=>{
+
     await Item.deleteItem(uuid)
-   
+    await db.end()
 
   })
 

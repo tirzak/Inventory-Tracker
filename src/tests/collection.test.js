@@ -3,7 +3,7 @@ import {app} from '../app'
 import * as Item from '../models/item'
 import * as Group from '../models/group'
 
-describe("Test the paths for group Routes", () => {
+describe("Test the paths for collection Routes", () => {
 
     let groupName = 'testgrouprobocop'
     let itemCount = 2 , productName = 'testmacm1', description = '120TB'

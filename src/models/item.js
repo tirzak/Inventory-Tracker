@@ -2,7 +2,6 @@ import { db } from '../database';
 import { v4 as uuidv4 } from 'uuid';
 export const getItem = async () => {
 
-
     const results = await db.query(`
         SELECT sku, productname as "productName", itemcount as "itemCount", description, created_at as "createdAt", 
         updated_at as "updatedAt"  FROM inventorylist ORDER BY updated_at DESC;
@@ -26,7 +25,11 @@ export const getSingleItem = async (sku) => {
     
     `, [sku]);
 
-    return results.rows[0]
+       if (results.rows)
+        return results.rows[0]
+    else {
+        return {}
+    }
 
 
 

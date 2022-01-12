@@ -11,7 +11,12 @@ export const getGroup = async () => {
     updated_at as "updatedAt"  FROM grouplist ORDER BY updated_at DESC;
     
     `);
-    return results.rows
+    
+    if(results)
+        return results.rows
+    else{
+        return []
+    }
 
 
 
@@ -25,9 +30,13 @@ export const getSingleGroup = async (uuid) => {
         updated_at as "updatedAt"  FROM grouplist WHERE uuid=$1  ;
       
    `, [uuid]);
-    return results.rows
-
-
+    
+  
+    if (results.rows)
+    return results.rows[0]
+else {
+    return {}
+}
 
 }
 

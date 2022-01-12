@@ -1,13 +1,12 @@
 import request from 'supertest'
 import {app} from '../app'
-import * as Collection from '../models/collection'
 import * as Item from '../models/item'
 import * as Group from '../models/group'
 
 describe("Test the paths for group Routes", () => {
 
-    let groupName = 'robocop'
-    let itemCount = 2 , productName = 'macm1', description = '120TB'
+    let groupName = 'testgrouprobocop'
+    let itemCount = 2 , productName = 'testmacm1', description = '120TB'
     let uuid, sku
     beforeAll(async ()=>{
        uuid = await Group.postGroup(groupName)
@@ -31,6 +30,23 @@ describe("Test the paths for group Routes", () => {
       
   
     });
+
+    test("It get items for a group", async () => {
+      
+        const response = await request(app).get(`/api/v1/collections/${uuid}`)
+        expect(response.statusCode).toBe(200)
+        expect(response.body[0].uuid).toBe(uuid)
+        expect(response.body[0].sku).toBe(sku)
+        expect(response.body[0].productName).toBe(productName)
+        expect(response.body[0].groupName).toBe(groupName)
+
+
+
+
+        
+        
+    
+      });
 
     test("It should get an array of item and group relations(collections)", async () => {
       

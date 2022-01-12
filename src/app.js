@@ -18,10 +18,8 @@ app.use(
   )
 
 app.use('/api/v1', apiV1()) 
-app.use('/', express.static(path.join(__dirname, 'static/')))
 
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/static/index.html'));
-});//Redirects unknown routes to index
+app.use((_, res) => res.redirect("/api/v1"));
+//Redirects unknown routes to index
 

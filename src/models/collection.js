@@ -3,7 +3,6 @@
 
 
 import { db } from '../database';
-import { v4 as uuidv4 } from 'uuid';
 import { updateProductCount, getSingleGroup } from './group';
 export const getCollection = async () => {
 
@@ -29,8 +28,7 @@ export const getCollection = async () => {
 export const getSingleCollection = async (uuid) => {
 
     let getGroupDetails = await getSingleGroup(uuid)
-    let groupDetails = getGroupDetails[0]
-
+    let groupDetails = getGroupDetails
     if (groupDetails.productCount > 0) {
 
         const results = await db.query(`

@@ -5,7 +5,7 @@
   "main": "extract.js",
   "scripts": {
     "test": "jest",
-    "start": "npx nodemon --exec npx babel-node src/server.js 8000",
+    "start": "npx babel-node src/server.js",
     "dev": "npx nodemon --exec npx babel-node src/server.js 8000"
   },
   "keywords": [],

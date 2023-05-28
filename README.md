@@ -1,4 +1,4 @@
-# Shopify Backend Intern Challenge
+# A Full Stack Application
 
 ## Inventory Tracker
 ### Supported Functions
@@ -33,8 +33,6 @@
 
 7. Go to http://localhost:3000 to access the app.
 
-### Frontend Code
-1. Since this is a backend challenge, I have converted the frontend to a production build. These prebuilt files are placed under `build` directory. However, the development code can be found under `client` folder for reference.
 
 ### Tests
 1. You can run `npm test` to test the app. If everything is working as it should, the tests will pass
